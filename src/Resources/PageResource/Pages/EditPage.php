@@ -2,7 +2,7 @@
 
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
-use App\Filament\Actions\Forms\LocaleSwitcher;
+use Filament\Core\Actions\Forms\LocaleSwitcher;
 use Filament\Actions;
 use \Filament\Actions\Action;
 use Filament\Resources\Pages\EditRecord;
@@ -11,7 +11,7 @@ use Z3d0X\FilamentFabricator\Concerns\EnablesDataMutation;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
-use App\Concerns\EditRecord\Translatable;
+use Filament\Core\Concerns\EditRecord\Translatable;
 
 class EditPage extends EditRecord
 {

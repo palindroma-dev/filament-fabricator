@@ -2,12 +2,12 @@
 
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
-use App\Filament\Actions\Forms\LocaleSwitcher;
+use Filament\Core\Actions\Forms\LocaleSwitcher;
 use Filament\Resources\Pages\CreateRecord;
 use Pboivin\FilamentPeek\Pages\Actions\PreviewAction;
 use Z3d0X\FilamentFabricator\Concerns\EnablesDataMutation;
 use Z3d0X\FilamentFabricator\Resources\PageResource;
-use App\Concerns\CreateRecord\Translatable;
+use Filament\Core\Concerns\CreateRecord\Translatable;
 
 class CreatePage extends CreateRecord
 {
