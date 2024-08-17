@@ -71,6 +71,7 @@ class Page extends Model implements Contract, HasMedia
 
     public function registerMediaConversions(Media $media = null): void
     {
-      $this->registerMediaConversionsFromImageHelpers($media);
+      $this->registerMediaConversionsFromImageHelpers($media, [ 'collection' => 'images' ]);
+      $this->registerMediaConversionsFromImageHelpers($media, [ 'collection' => 'og_image', 'conversions' => [ 'medium' ] ]);
     }
 }
