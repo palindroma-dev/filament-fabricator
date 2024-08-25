@@ -3,6 +3,7 @@
 namespace Z3d0X\FilamentFabricator\Resources;
 
 use Closure;
+use Filament\Tables\Actions\ReplicateAction;
 use Filament\Forms\Components\Actions\Action as FormAction;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
@@ -27,6 +28,7 @@ use Illuminate\Validation\Rules\Unique;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Z3d0X\FilamentFabricator\Forms\Components\PageBuilder;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as PageContract;
+use Z3d0X\FilamentFabricator\Models\Page;
 use Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
 class PageResource extends Resource
@@ -168,6 +170,21 @@ class PageResource extends Resource
                     ->options(FilamentFabricator::getLayouts()),
             ])
             ->actions([
+                ReplicateAction::make()
+                  ->beforeReplicaSaved(function ($replica) {
+                    $replica->slug = generateUniqueSlug($replica->slug);
+                  })
+                  ->after(function (Page $record, Page $replica) {
+                    $collections = [ 'contact_us_cta_image', 'cta_image', 'og_image' ];
+
+                    foreach($collections as $collection) {
+                      foreach ($record->getMedia($collection) as $media) {
+                        $replica->addMedia($media->getPath())
+                          ->preservingOriginal()
+                          ->toMediaCollection($collection);
+                      }
+                    }
+                  }),
                 ViewAction::make()
                     ->visible(config('filament-fabricator.enable-view-page')),
                 EditAction::make(),
