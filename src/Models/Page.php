@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\ResponseCache\Facades\ResponseCache;
 use Z3d0X\FilamentFabricator\Models\Contracts\Page as Contract;
 use Spatie\Translatable\HasTranslations;
 
@@ -24,6 +25,29 @@ class Page extends Model implements Contract, HasMedia
         }
 
         parent::__construct($attributes);
+    }
+
+    protected static function boot()
+    {
+      parent::boot();
+
+      static::created(function () {
+        if(config('responsecache.enabled')) {
+          ResponseCache::clear();
+        }
+      });
+
+      static::updated(function () {
+        if(config('responsecache.enabled')) {
+          ResponseCache::clear();
+        }
+      });
+
+      static::deleted(function () {
+        if(config('responsecache.enabled')) {
+          ResponseCache::clear();
+        }
+      });
     }
 
     protected array $translatable = ['title', 'seo_title', 'seo_description', 'og_title', 'og_description'];
