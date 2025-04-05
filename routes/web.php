@@ -16,7 +16,8 @@ if (config('filament-fabricator.routing.enabled')) {
       ->group(function () {
         Route::get('/{filamentFabricatorPage?}', PageController::class)
           ->where('filamentFabricatorPage', '.*')
-          ->fallback();
+          ->fallback()
+          ->name('page');
       });
   });
 }
