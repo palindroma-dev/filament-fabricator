@@ -9,7 +9,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 if (config('filament-fabricator.routing.enabled')) {
   Route::group([
     'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'cacheResponse']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
   ], function (Router $router) {
     Route::middleware(config('filament-fabricator.middleware') ?? [])
       ->prefix(FilamentFabricator::getRoutingPrefix())
