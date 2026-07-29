@@ -2,6 +2,9 @@
 
 namespace Z3d0X\FilamentFabricator\Models\Contracts;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -12,10 +15,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read string $layout
  * @property-read array $blocks
  * @property-read int|string $parent_id
- * @property-read \Illuminate\Database\Eloquent\Collection|\Z3d0X\FilamentFabricator\Models\Contracts\Page[] $children
- * @property-read \Illuminate\Database\Eloquent\Collection|\Z3d0X\FilamentFabricator\Models\Contracts\Page[] $allChildren
- * @property-read \Illuminate\Support\Carbon $created_at
- * @property-read \Illuminate\Support\Carbon $updated_at
+ * @property-read Collection|Page[] $children
+ * @property-read Collection|Page[] $allChildren
+ * @property-read Carbon $created_at
+ * @property-read Carbon $updated_at
  */
 interface Page
 {
@@ -25,6 +28,6 @@ interface Page
 
     public function allChildren(): HasMany;
 
-    /** @return \Illuminate\Database\Eloquent\Builder */
+    /** @return Builder */
     public static function query();
 }

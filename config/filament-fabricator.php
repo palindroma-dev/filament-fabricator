@@ -1,5 +1,14 @@
 <?php
 
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Z3d0X\FilamentFabricator\Models\Page;
+use Z3d0X\FilamentFabricator\Resources\PageResource;
+
 // config for Z3d0X/FilamentFabricator
 return [
     'routing' => [
@@ -24,18 +33,18 @@ return [
     ],
 
     'middleware' => [
-        \Illuminate\Cookie\Middleware\EncryptCookies::class,
-        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-        \Illuminate\Session\Middleware\StartSession::class,
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
         // \Illuminate\Session\Middleware\AuthenticateSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
-        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ShareErrorsFromSession::class,
+        VerifyCsrfToken::class,
+        SubstituteBindings::class,
     ],
 
-    'page-model' => \Z3d0X\FilamentFabricator\Models\Page::class,
+    'page-model' => Page::class,
 
-    'page-resource' => \Z3d0X\FilamentFabricator\Resources\PageResource::class,
+    'page-resource' => PageResource::class,
 
     'enable-view-page' => false,
 

@@ -93,7 +93,7 @@ class Page extends Model implements Contract, HasMedia
             ->with('allChildren:id,slug,title,parent_id');
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
       $this->registerMediaConversionsFromImageHelpers($media, [ 'collection' => 'images' ]);
       $this->registerMediaConversionsFromImageHelpers($media, [ 'collection' => 'og_image', 'conversions' => [ 'medium' ] ]);

@@ -2,6 +2,9 @@
 
 namespace Z3d0X\FilamentFabricator\Resources\PageResource\Pages;
 
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\Concerns\HasPreviewModal;
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use Filament\Core\Actions\Forms\LocaleSwitcher;
 use Filament\Actions;
 use \Filament\Actions\Action;
@@ -15,7 +18,7 @@ use Filament\Core\Concerns\EditRecord\Translatable;
 
 class EditPage extends EditRecord
 {
-    use Concerns\HasPreviewModal, Translatable, EnablesDataMutation;
+    use HasPreviewModal, Translatable, EnablesDataMutation;
 
     protected static string $resource = PageResource::class;
 
@@ -31,10 +34,10 @@ class EditPage extends EditRecord
 
             PreviewAction::make(),
 
-            Actions\ViewAction::make()
+            ViewAction::make()
                 ->visible(config('filament-fabricator.enable-view-page')),
 
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
 
             Action::make('visit')
                 ->label(__('filament-fabricator::page-resource.actions.visit'))

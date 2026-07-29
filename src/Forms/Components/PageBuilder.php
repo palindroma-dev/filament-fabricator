@@ -9,8 +9,14 @@ use Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
 
 class PageBuilder extends Builder
 {
-    protected string $view = 'filament-fabricator::components.forms.components.page-builder';
-
+    /**
+     * The view is Filament's own Builder view. This class used to override it
+     * with a fork of Filament 3's markup, purely to offer a modal block picker
+     * next to the dropdown one; that fork was built on v3 internals
+     * (`mountFormComponentAction`, `x-filament::grid`) that no longer exist.
+     * Filament's stock builder renders the dropdown picker natively, so
+     * `BlockPickerStyle::Modal` now falls back to the dropdown.
+     */
     protected BlockPickerStyle $blockPickerStyle = BlockPickerStyle::Dropdown;
 
     protected function setUp(): void

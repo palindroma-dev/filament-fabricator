@@ -2,6 +2,8 @@
 
 namespace Z3d0X\FilamentFabricator;
 
+use Exception;
+use InvalidArgumentException;
 use Closure;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -54,7 +56,7 @@ class FilamentFabricatorManager
         match ($baseClass) {
             Layout::class => static::registerLayout($class),
             PageBlock::class => static::registerPageBlock($class),
-            default => throw new \Exception('Invalid class type'),
+            default => throw new Exception('Invalid class type'),
         };
     }
 
@@ -62,7 +64,7 @@ class FilamentFabricatorManager
     public function registerLayout(string $layout): void
     {
         if (! is_subclass_of($layout, Layout::class)) {
-            throw new \InvalidArgumentException("{$layout} must extend " . Layout::class);
+            throw new InvalidArgumentException("{$layout} must extend " . Layout::class);
         }
 
         $this->layouts->put($layout::getName(), $layout);
@@ -72,7 +74,7 @@ class FilamentFabricatorManager
     public function registerPageBlock(string $pageBlock): void
     {
         if (! is_subclass_of($pageBlock, PageBlock::class)) {
-            throw new \InvalidArgumentException("{$pageBlock} must extend " . PageBlock::class);
+            throw new InvalidArgumentException("{$pageBlock} must extend " . PageBlock::class);
         }
 
         $this->pageBlocks->put($pageBlock::getName(), $pageBlock);

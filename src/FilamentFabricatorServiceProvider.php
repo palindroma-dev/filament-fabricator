@@ -2,6 +2,8 @@
 
 namespace Z3d0X\FilamentFabricator;
 
+use Z3d0X\FilamentFabricator\Commands\MakeLayoutCommand;
+use Z3d0X\FilamentFabricator\Commands\MakePageBlockCommand;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -41,8 +43,8 @@ class FilamentFabricatorServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         $commands = [
-            Commands\MakeLayoutCommand::class,
-            Commands\MakePageBlockCommand::class,
+            MakeLayoutCommand::class,
+            MakePageBlockCommand::class,
         ];
 
         $aliases = [];

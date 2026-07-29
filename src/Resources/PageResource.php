@@ -2,23 +2,26 @@
 
 namespace Z3d0X\FilamentFabricator\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Actions\Action;
+use Filament\Actions\ReplicateAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ListPages;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\CreatePage;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\ViewPage;
+use Z3d0X\FilamentFabricator\Resources\PageResource\Pages\EditPage;
 use Closure;
-use Filament\Tables\Actions\ReplicateAction;
-use Filament\Forms\Components\Actions\Action as FormAction;
-use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Core\Concerns\Resource\Translatable;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -35,20 +38,20 @@ class PageResource extends Resource
 {
     use Translatable;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    protected static ?string $navigationGroup = 'Content Management';
+    protected static string | \UnitEnum | null $navigationGroup = 'Content Management';
 
     public static function getModel(): string
     {
         return FilamentFabricator::getPageModel();
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->columns(3)
             ->schema([
                 Group::make()
@@ -115,7 +118,7 @@ class PageResource extends Resource
                                     ->preload()
                                     ->reactive()
                                     ->suffixAction(
-                                        fn ($get, $context) => FormAction::make($context . '-parent')
+                                        fn ($get, $context) => Action::make($context . '-parent')
                                             ->icon('heroicon-o-arrow-top-right-on-square')
                                             ->url(fn () => PageResource::getUrl($context, ['record' => $get('parent_id')]))
                                             ->openUrlInNewTab()
@@ -171,7 +174,7 @@ class PageResource extends Resource
                     ->label(__('filament-fabricator::page-resource.labels.layout'))
                     ->options(FilamentFabricator::getLayouts()),
             ])
-            ->actions([
+            ->recordActions([
                 ReplicateAction::make()
                   ->beforeReplicaSaved(function ($replica) {
                     $replica->slug = generateUniqueSlug($replica->slug);
@@ -198,7 +201,7 @@ class PageResource extends Resource
                     ->color('success')
                     ->visible(config('filament-fabricator.routing.enabled')),
             ])
-            ->bulkActions([]);
+            ->toolbarActions([]);
     }
 
     public static function getModelLabel(): string
@@ -214,10 +217,10 @@ class PageResource extends Resource
     public static function getPages(): array
     {
         return array_filter([
-            'index' => Pages\ListPages::route('/'),
-            'create' => Pages\CreatePage::route('/create'),
-            'view' => config('filament-fabricator.enable-view-page') ? Pages\ViewPage::route('/{record}') : null,
-            'edit' => Pages\EditPage::route('/{record}/edit'),
+            'index' => ListPages::route('/'),
+            'create' => CreatePage::route('/create'),
+            'view' => config('filament-fabricator.enable-view-page') ? ViewPage::route('/{record}') : null,
+            'edit' => EditPage::route('/{record}/edit'),
         ]);
     }
 }
